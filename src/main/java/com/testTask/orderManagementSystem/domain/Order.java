@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Order {
 

@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Product {
 

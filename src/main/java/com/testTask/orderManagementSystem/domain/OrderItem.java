@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Table(name = "order_items")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class OrderItem {
 
