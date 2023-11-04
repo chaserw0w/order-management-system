@@ -9,12 +9,12 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "goods")
+@Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Goods {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
