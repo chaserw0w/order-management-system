@@ -25,14 +25,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
+                .antMatchers("/", "/login", "/resources/**").permitAll()
                 .antMatchers("/admin/**").hasRole("MANAGER")
                 .antMatchers("/client/**").hasRole("CLIENT")
                 .anyRequest().authenticated()
-            .and()
+                .and()
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
-            .and()
+                .and()
             .logout()
                 .permitAll();
 
