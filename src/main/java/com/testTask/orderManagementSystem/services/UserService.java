@@ -1,6 +1,6 @@
 package com.testTask.orderManagementSystem.services;
 
-import com.testTask.orderManagementSystem.domain.User;
+/*import com.testTask.orderManagementSystem.domain.User;
 import com.testTask.orderManagementSystem.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,4 +25,4 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
-}
+}*/
