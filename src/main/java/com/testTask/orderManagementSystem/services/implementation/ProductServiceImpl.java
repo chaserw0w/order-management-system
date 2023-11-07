@@ -5,12 +5,14 @@ import com.testTask.orderManagementSystem.dto.ProductDTO;
 import com.testTask.orderManagementSystem.repo.OrderRepository;
 import com.testTask.orderManagementSystem.repo.ProductRepository;
 import com.testTask.orderManagementSystem.services.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -33,5 +35,11 @@ public class ProductServiceImpl implements ProductService {
                     return productDTO;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Product saveProduct(Product product) {
+        log.info("Saving new product: {}", product.getName());
+        return productRepository.save(product);
     }
 }

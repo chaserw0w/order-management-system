@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -36,16 +39,28 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    protected void configure(HttpSecurity http) throws Exception {
+    /*protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/api/products").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/secured").hasRole("ADMIN")
+                .antMatchers("/api/add-product").hasRole("ADMIN")
                 .and()
-                .formLogin()
+                .httpBasic()
                 .and()
                 .logout()
                 .and()
                 .csrf().disable();
+    }*/
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/api/products").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/add-product").hasRole("ADMIN")
+                .and()
+                .httpBasic(withDefaults())
+                .formLogin(withDefaults())
+                .csrf().disable();
+        return http.build();
     }
 }
