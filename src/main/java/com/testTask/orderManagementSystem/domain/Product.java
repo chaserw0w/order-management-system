@@ -1,9 +1,6 @@
 package com.testTask.orderManagementSystem.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,7 +9,8 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id

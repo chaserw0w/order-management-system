@@ -1,9 +1,9 @@
 package com.testTask.orderManagementSystem.controllers;
 
-import com.testTask.orderManagementSystem.domain.Product;
 import com.testTask.orderManagementSystem.dto.ProductDTO;
-import com.testTask.orderManagementSystem.services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.testTask.orderManagementSystem.services.implementation.ProductServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,25 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping(path = "/api")
 public class ProductController {
 
-    @GetMapping("/user")
-    public String getUser() {
-        return "Fuck Spring Security";
+    private final ProductServiceImpl productService;
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
-
-    @GetMapping("/public")
-    public String getPublicUser() {
-        return "Fuck Public Spring Security";
-    }
-
-    @GetMapping("/secured")
-    public String getSecurdUser() {
-        return "Fuck Secured Spring Security";
-    }
-
-    /*@GetMapping("/goods")
-    public List<Product> getAllgoods() {
-
-    }*/
 }

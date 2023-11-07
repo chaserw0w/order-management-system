@@ -23,8 +23,8 @@ public class SecurityConfig {
                 .roles("USER")
                 .build();
 
-        UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("adminpassword"))
+        UserDetails admin = User.withUsername("manager")
+                .password(passwordEncoder.encode("managerpassword"))
                 .roles("ADMIN")
                 .build();
 
@@ -39,7 +39,7 @@ public class SecurityConfig {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/public").permitAll()
+                .antMatchers("/api/products").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/secured").hasRole("ADMIN")
                 .and()
                 .formLogin()
