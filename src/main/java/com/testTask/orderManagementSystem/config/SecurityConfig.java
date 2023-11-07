@@ -39,24 +39,12 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    /*protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/api/products").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/add-product").hasRole("ADMIN")
-                .and()
-                .httpBasic()
-                .and()
-                .logout()
-                .and()
-                .csrf().disable();
-    }*/
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/api/products").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/api/add-product").hasRole("ADMIN")
+                .antMatchers("/api/orders/place-order").hasRole("USER")
                 .and()
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

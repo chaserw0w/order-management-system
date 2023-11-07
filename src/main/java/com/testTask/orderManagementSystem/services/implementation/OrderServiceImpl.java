@@ -3,19 +3,18 @@ package com.testTask.orderManagementSystem.services.implementation;
 import com.testTask.orderManagementSystem.domain.Order;
 import com.testTask.orderManagementSystem.domain.OrderItem;
 import com.testTask.orderManagementSystem.domain.Product;
-import com.testTask.orderManagementSystem.dto.OrderDTO;
-import com.testTask.orderManagementSystem.dto.OrderItemDTO;
 import com.testTask.orderManagementSystem.repo.OrderRepository;
 import com.testTask.orderManagementSystem.repo.ProductRepository;
 import com.testTask.orderManagementSystem.services.OrderService;
+import com.testTask.orderManagementSystem.util.ProductNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -28,30 +27,32 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO placeOrder(OrderDTO order) {
-        Order newOrder = new Order();
-        newOrder.setOrderDate(new Date());
-
-        List<OrderItemDTO> items = order.getOrderItems();
-        List<OrderItem> orderItems = new ArrayList<>();
-
-        for (OrderItemDTO item : items) {
-            Product product = productRepository.findById(item.getProduct().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Product not found!"));
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(product);
-            orderItem.setQuantity(item.getQuantity());
-            orderItem.setOrder(newOrder);
-
-            orderItems.add(orderItem);
+    public Order placeOrder(Order order) {
+        if (order == null) {
+            throw new IllegalArgumentException("Order cannot be null!");
         }
-        newOrder.setOrderItems(orderItems);
-        newOrder.setPaid(false);    //Initially the order is not paid
 
-        Order savedOrder = orderRepository.save(newOrder);
-        OrderDTO savedOrderDTO = new OrderDTO();
+        order.setOrderDate(new Date());
+        order.setPaid(false);
 
-        return savedOrderDTO;
+        BigDecimal totalCost = BigDecimal.ZERO;
+
+        if (order.getOrderItems() != null) {
+            for (OrderItem orderItem : order.getOrderItems()) {
+                if (orderItem.getProduct() != null && orderItem.getProduct().getId() != null) {
+                    Product product = productRepository.findById(orderItem.getProduct().getId())
+                            .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + orderItem.getProduct().getId()));
+                    int quantity = orderItem.getQuantity();
+                    BigDecimal itemTotal = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+                    totalCost = totalCost.add(itemTotal);
+                    orderItem.setItemTotal(itemTotal);
+                    orderItem.setProduct(product);
+                    orderItem.setOrder(order);
+                }
+            }
+        }
+        order.setTotalCost(totalCost);
+
+        return orderRepository.save(order);
     }
 }

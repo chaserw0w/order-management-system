@@ -1,7 +1,7 @@
 package com.testTask.orderManagementSystem.services;
 
-import com.testTask.orderManagementSystem.dto.OrderDTO;
+import com.testTask.orderManagementSystem.domain.Order;
 
 public interface OrderService {
-    OrderDTO placeOrder(OrderDTO order);
+    Order placeOrder(Order order);
 }

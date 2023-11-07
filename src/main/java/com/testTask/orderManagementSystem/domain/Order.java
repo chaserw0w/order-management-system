@@ -1,11 +1,13 @@
 package com.testTask.orderManagementSystem.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@ToString
 public class Order {
 
     @Id
@@ -25,8 +28,12 @@ public class Order {
     private Date orderDate;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     @Column(nullable = false)
     private boolean paid;
+
+    @Column(nullable = false)
+    private BigDecimal totalCost;
 }
