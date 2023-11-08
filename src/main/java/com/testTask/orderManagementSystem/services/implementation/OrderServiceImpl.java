@@ -72,7 +72,8 @@ public class OrderServiceImpl implements OrderService {
         logDeletedOrders(tenMinutesAge);
     }
 
-    private void logDeletedOrders(Date date) {
+    //was made default in order to be accessible from tests
+    void logDeletedOrders(Date date) {
         List<Order> deletedOrders = orderRepository.findNotPaidOrdersCreatedBeforeTimeOut(date);
         for (Order order : deletedOrders) {
             log.info("Deleted order: ID={}, Order Date={}, Total Cost={}", order.getId(), order.getOrderDate(), order.getTotalCost());
