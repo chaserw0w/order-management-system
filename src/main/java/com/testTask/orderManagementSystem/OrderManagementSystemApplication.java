@@ -9,12 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
+@EnableScheduling
 public class OrderManagementSystemApplication {
 
 	public static void main(String[] args) {
@@ -31,7 +33,9 @@ public class OrderManagementSystemApplication {
 			Product product5 = productRepository.save(new Product(null, "MacBook Air M2", new BigDecimal(2000), 60));
 			Product product6 = productRepository.save(new Product(null, "MacBook Pro M2", new BigDecimal(2500), 80));
 			Product product7 = productRepository.save(new Product(null, "Apple Pro Stand", new BigDecimal(1000), 50));
+			Product product8 = productRepository.save(new Product(null, "Apple Pro Stand 2", new BigDecimal(1999), 50));
 
+			//adding 1 sample order with orderItems to demonstrate the integrity of the application from scratch
 			Order order1 = new Order();
 			order1.setId(1L);
 			order1.setOrderDate(new Date());

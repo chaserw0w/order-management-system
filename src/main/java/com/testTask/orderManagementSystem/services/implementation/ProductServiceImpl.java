@@ -2,7 +2,6 @@ package com.testTask.orderManagementSystem.services.implementation;
 
 import com.testTask.orderManagementSystem.domain.Product;
 import com.testTask.orderManagementSystem.dto.ProductDTO;
-import com.testTask.orderManagementSystem.repo.OrderRepository;
 import com.testTask.orderManagementSystem.repo.ProductRepository;
 import com.testTask.orderManagementSystem.services.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getAllProducts() {
         List<Product> availableProducts = productRepository.findAll();
+        log.info("Listing all of the available products: {}", availableProducts.toString());
 
         return availableProducts.stream()
                 .map(product -> {
