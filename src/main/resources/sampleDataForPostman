@@ -1,0 +1,96 @@
+1) Listing products as both roles:
+Use a GET request on this URL:
+GET -> http://localhost:8080/api/products;
+
+Use Basic Auth type with equivalent credentials for desired role.
+No Body is needed for this request.
+
+
+2)Adding product to the database.
+POST -> http://localhot:8080/api/add-product
+
+Basic Auth type with credentials for Admin role.
+Sample Body:
+{
+    "name": "Apple Pro Stand 2",
+    "price": 1999,
+    "quantity": 40
+}
+
+
+3) Placing order for products.
+
+POST -> http://localhost:8080/api/orders/place-order
+
+Basic Auth type with credentials for User role.
+Sample Body:
+{
+  "id": 2,
+  "orderDate": "2023-11-07T22:13:58Z",
+  "orderItems": [
+    {
+      "id": 1,
+      "product": {
+        "id": 1,
+        "name": "Product 1",
+        "price": 10.0,
+        "quantity": 100
+      },
+      "quantity": 5,
+      "itemTotal": 50.0
+    },
+    {
+      "id": 2,
+      "product": {
+        "id": 2,
+        "name": "Product 2",
+        "price": 15.0,
+        "quantity": 200
+      },
+      "quantity": 10,
+      "itemTotal": 150.0
+    }
+  ],
+  "paid": false,
+  "totalCost": 200.0
+}
+
+
+4)Marking order as paid.
+
+POST -> http://localhost:8080/api/orders/order-pay/2
+
+(Use id=2 if you've added an order in the same session that you're trying to pay for order. Otherwise - the sample body may produce some bugs)
+
+Basic Auth type with credentials for User role.
+Sample Body:
+{
+  "id": 1,
+  "orderDate": "2023-11-07T22:13:58Z",
+  "orderItems": [
+    {
+      "id": 1,
+      "product": {
+        "id": 1,
+        "name": "Product 1",
+        "price": 10.0,
+        "quantity": 100
+      },
+      "quantity": 5,
+      "itemTotal": 50.0
+    },
+    {
+      "id": 2,
+      "product": {
+        "id": 2,
+        "name": "Product 2",
+        "price": 15.0,
+        "quantity": 200
+      },
+      "quantity": 10,
+      "itemTotal": 150.0
+    }
+  ],
+  "paid": true,
+  "totalCost": 200.0
+}
