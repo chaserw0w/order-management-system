@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .antMatchers("/api/add-product").hasRole("ADMIN")
                 .antMatchers("/api/orders/place-order").hasRole("USER")
                 .antMatchers("/api/orders/order-pay/**").hasRole("USER")
+                .antMatchers("/api/remove-product/**").hasRole("ADMIN")
                 .and()
                 .httpBasic(withDefaults())
                 .formLogin(withDefaults())

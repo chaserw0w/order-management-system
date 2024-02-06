@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.Boolean.*;
+
 @Service
 @Slf4j
 public class ProductServiceImpl implements ProductService {
@@ -41,5 +43,12 @@ public class ProductServiceImpl implements ProductService {
     public Product saveProduct(Product product) {
         log.info("Saving new product: {}", product.getName());
         return productRepository.save(product);
+    }
+
+    @Override
+    public Boolean removeProduct(Long id) {
+        log.info("Deleting product by Id: {}", id);
+        productRepository.deleteById(id);
+        return TRUE;
     }
 }

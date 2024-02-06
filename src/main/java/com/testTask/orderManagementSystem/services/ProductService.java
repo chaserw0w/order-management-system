@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProductService {
     Product saveProduct(Product product);
     List<ProductDTO> getAllProducts();
+    Boolean removeProduct(Long id);
 }

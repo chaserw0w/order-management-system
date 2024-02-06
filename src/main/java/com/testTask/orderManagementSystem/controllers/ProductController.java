@@ -25,4 +25,9 @@ public class ProductController {
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productService.saveProduct(product));
     }
+
+    @DeleteMapping("/remove-product/{productId}")
+    public ResponseEntity<Boolean> removeProduct(@PathVariable Long productId) {
+        return ResponseEntity.ok(productService.removeProduct(productId));
+    }
 }
