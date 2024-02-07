@@ -103,4 +103,9 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderPaymentException("Error processing order payment");
         }
     }
+
+    @Override
+    public List<OrderItem> findOrderItemsForOrder(Long orderId) {
+        return null;
+    }
 }

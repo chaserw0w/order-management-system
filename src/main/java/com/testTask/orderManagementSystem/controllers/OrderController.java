@@ -1,10 +1,13 @@
 package com.testTask.orderManagementSystem.controllers;
 
 import com.testTask.orderManagementSystem.domain.Order;
+import com.testTask.orderManagementSystem.domain.OrderItem;
 import com.testTask.orderManagementSystem.services.implementation.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +23,10 @@ public class OrderController {
     @PostMapping("/order-pay/{orderId}")
     public ResponseEntity<Order> payOrder(@PathVariable Long orderId) {
         return ResponseEntity.ok(orderService.payOrder(orderId));
+    }
+
+    @GetMapping("/{orderId}/orderItems")
+    public ResponseEntity<List<OrderItem>> findOrderItemsForOrder(@PathVariable Long orderId) {
+        return ResponseEntity.ok(orderService.findOrderItemsForOrder(orderId));
     }
 }
