@@ -6,6 +6,7 @@ import com.testTask.orderManagementSystem.repo.ProductRepository;
 import com.testTask.orderManagementSystem.services.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,9 +47,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean removeProduct(Long id) {
-        log.info("Deleting product by Id: {}", id);
-        productRepository.deleteById(id);
-        return TRUE;
+    @Transactional
+    public Boolean removeProduct(Long productId) {
+        try {
+            productRepository.deleteById(productId);
+            log.info("Deleting product by Id: {}", productId);
+            return TRUE;
+        } catch (Exception e) {
+            log.error("Error while processing the removal of the product: {}", e.getMessage(), e);
+            return FALSE;
+        }
     }
 }
